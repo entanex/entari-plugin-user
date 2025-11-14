@@ -419,7 +419,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "arclet-entari", specifier = ">=0.16.5" },
+    { name = "arclet-entari", specifier = ">=0.16.8" },
     { name = "entari-plugin-database", specifier = ">=0.2.1" },
     { name = "expiringdictx", specifier = ">=1.1.0" },
 ]
