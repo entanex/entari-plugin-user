@@ -32,7 +32,7 @@ class UserSession:
     session: Session[MessageEvent]
     user: User
 
-    def __init__(self, session: Session, user: User) -> None:
+    def __init__(self, session: Session[MessageEvent], user: User) -> None:
         self.session = session
         self.user = user
 
