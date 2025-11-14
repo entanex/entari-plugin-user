@@ -1,13 +1,10 @@
 from arclet.alconna import Alconna, CommandMeta, Args, Option
 from arclet.entari import command, At
 
-from entari_plugin_database import AsyncSession
-
 from ..i18n import Lang
 from ..annotated import UserSession
 from ..filters import Authorization
 from ..utils import get_user, set_user_authority
-
 
 authorize_alc = Alconna(
     "authorize",
@@ -20,12 +17,11 @@ authorize_alc = Alconna(
     ),
 )
 authorize_alc.shortcut("auth", {"command": "authorize", "fuzzy": True, "prefix": True})
+authorize_disp = command.mount(authorize_alc)
 
 
-@command.on(authorize_alc)
-async def authorize_(
-    value: int, user: At, session: UserSession, db_session: AsyncSession
-):
+@authorize_disp.handle()
+async def authorize_(value: int, user: At, session: UserSession):
     if user.id is None:
         return
 

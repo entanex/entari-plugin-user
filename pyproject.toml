@@ -12,7 +12,7 @@ keywords = []
 requires-python = ">=3.10"
 
 dependencies = [
-    "arclet-entari>=0.16.5",
+    "arclet-entari>=0.16.8",
     "entari-plugin-database>=0.2.1",
     "expiringdictx>=1.1.0",
 ]
