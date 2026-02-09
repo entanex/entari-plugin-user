@@ -7,6 +7,8 @@ from entari_plugin_database import Base, mapped_column, Mapped
 
 
 class User(Base):
+    __tablename__ = "entari_plugin_user_user"
+
     id: Mapped[int] = mapped_column(primary_key=True)
     """用户 ID"""
     name: Mapped[str] = mapped_column(String(255), unique=True)
@@ -18,6 +20,8 @@ class User(Base):
 
 
 class Bind(Base):
+    __tablename__ = "entari_plugin_user_bind"
+
     platform: Mapped[str] = mapped_column(String(32), primary_key=True)
     """平台名"""
     platform_id: Mapped[str] = mapped_column(String(64), primary_key=True)
