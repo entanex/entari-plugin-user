@@ -1,5 +1,8 @@
 # entari-plugin-user
 
+![python](https://img.shields.io/badge/python-3.10+-blue.svg?style=flat-square)
+![pypi](https://img.shields.io/pypi/v/entari-plugin-user.svg?style=flat-square)
+
 Entari 用户系统插件，用于统一管理用户信息、跨平台账号绑定和权限等级控制。
 
 ## 安装
