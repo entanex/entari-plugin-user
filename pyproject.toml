@@ -12,7 +12,7 @@ keywords = []
 requires-python = ">=3.10"
 
 dependencies = [
-    "arclet-entari>=0.17.0rc3",
+    "arclet-entari>=0.17.0rc4",
     "entari-plugin-database>=0.2.3",
     "expiringdictx>=1.1.0",
 ]
@@ -23,7 +23,7 @@ repository = "https://github.com/netsora/entari-plugin-user"
 
 [dependency-groups]
 dev = [
-    "arclet-entari[full]>=0.16.5",
+    "arclet-entari[full]>=0.17.0rc4",
     "entari-plugin-server>=0.5.0",
     "pre-commit>=4.2.0",
     "ruff>=0.12.0",
