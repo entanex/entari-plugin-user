@@ -37,12 +37,12 @@ async def _(token: command.Match[str], session: UserSession):
             session.user_id,
             session.channel_type,
         )
-        await session.session.send(Lang.bind.generated_1(token=token.result))
+        await session.send(Lang.bind.generated_1(token=token.result))
         return
 
     bind_info = tokens.pop(token.result)
     if bind_info is None:
-        await session.session.send(Lang.bind.expire())
+        await session.send(Lang.bind.expire())
         return
 
     platform, platform_id, user_id, channel_type = bind_info
@@ -50,18 +50,18 @@ async def _(token: command.Match[str], session: UserSession):
     if channel_type is not None and channel_type.value != 1:
         token.result = generate_token()
         tokens[token.result] = (session.platform, session.platform_id, user_id, None)
-        await session.session.send(Lang.bind.generated_2(token=token.result))
+        await session.send(Lang.bind.generated_2(token=token.result))
     elif channel_type is None:
         if session.user_id != user_id:
-            await session.session.send(Lang.bind.same_account())
+            await session.send(Lang.bind.same_account())
             return
 
         user = await get_user(session.platform, session.platform_id)
         await set_bind(session.platform, session.platform_id, user.id)
-        await session.session.send(Lang.bind.success())
+        await session.send(Lang.bind.success())
     else:
         await set_bind(platform, platform_id, session.user_id)
-        await session.session.send(Lang.bind.success())
+        await session.send(Lang.bind.success())
 
 
 @bind_disp.assign("list")
@@ -69,7 +69,7 @@ async def _(session: UserSession):
     binds = await get_bind_list(session.platform, session.platform_id)
 
     if not binds:
-        await session.session.send(Lang.bind.no_accounts())
+        await session.send(Lang.bind.no_accounts())
         return
 
     bind_list = []
@@ -78,13 +78,13 @@ async def _(session: UserSession):
         bind_list.append(f"{status} {bind.platform}: {bind.platform_id}")
 
     bind_info = "\n".join(bind_list)
-    await session.session.send(Lang.bind.list(list=bind_info))
+    await session.send(Lang.bind.list(list=bind_info))
 
 
 @bind_disp.assign("revoke")
 async def _(session: UserSession):
     result = await remove_bind(session.platform, session.platform_id)
     if result:
-        await session.session.send(Lang.bind.remove_success())
+        await session.send(Lang.bind.remove_success())
     else:
-        await session.session.send(Lang.bind.remove_original())
+        await session.send(Lang.bind.remove_original())

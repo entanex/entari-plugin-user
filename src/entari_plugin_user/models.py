@@ -1,8 +1,9 @@
+from collections.abc import Iterable
 from datetime import datetime, timezone
 
 from sqlalchemy import func, String, Integer, DateTime
 
-from arclet.entari import Session, MessageEvent, ChannelType
+from arclet.entari import Element, MessageObject, Session, MessageEvent, ChannelType
 from entari_plugin_database import Base, mapped_column, Mapped
 
 
@@ -68,3 +69,14 @@ class UserSession:
     def created_at(self) -> datetime:
         """用户创建日期"""
         return self.user.created_at.replace(tzinfo=timezone.utc)
+
+    async def send(
+        self,
+        message: str | Iterable[str | Element],
+        at_sender: bool = False,
+        reply_to: bool = False,
+    ) -> list[MessageObject]:
+        return await self.session.send(message, at_sender, reply_to)
+
+    def __getattr__(self, name):
+        return getattr(self.session, name)

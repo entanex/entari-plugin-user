@@ -22,7 +22,7 @@ user_disp = command.mount(user_alc)
 
 @user_disp.assign("$main")
 async def user_(session: UserSession):
-    await session.session.send(
+    await session.send(
         Lang.user.message(
             platform=session.platform,
             platform_id=session.platform_id,
@@ -38,6 +38,6 @@ async def rename_(name: str, session: UserSession):
     try:
         await set_user_name(session.user_id, name)
     except IntegrityError:
-        await session.session.send(Lang.user.rename.updated(name=name))
+        await session.send(Lang.user.rename.updated(name=name))
     else:
-        await session.session.send(Lang.user.rename.duplicate())
+        await session.send(Lang.user.rename.duplicate())

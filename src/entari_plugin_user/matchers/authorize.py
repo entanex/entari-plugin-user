@@ -38,15 +38,15 @@ async def authorize_(value: int | None, user: At, session: UserSession):
     target_user = await get_user(session.platform, user.id)
 
     if target_user.authority >= operator_user.authority:
-        await session.session.send(Lang.authority.low_authority())
+        await session.send(Lang.authority.low_authority())
         return
 
     if value >= operator_user.authority:
-        await session.session.send(Lang.authority.low_authority())
+        await session.send(Lang.authority.low_authority())
         return
 
     await set_user_authority(target_user.id, value)
-    await session.session.send(Lang.authority.success())
+    await session.send(Lang.authority.success())
 
 
 @authorize_disp.assign("superuser")
@@ -74,9 +74,9 @@ async def auth_superuser_(token: command.Match[str], session: UserSession):
         bind_info = tokens.pop(token.result)
 
     if bind_info is None:
-        await session.session.send(Lang.bind.expire())
+        await session.send(Lang.bind.expire())
         return
 
     user_id = bind_info
     await set_user_authority(user_id, 5)
-    await session.session.send(Lang.authority.superuser_authed())
+    await session.send(Lang.authority.superuser_authed())

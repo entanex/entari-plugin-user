@@ -14,7 +14,7 @@ class Authorization(Propagator):
     async def before(self, session: UserSession):
         self.success = session.user.authority >= self.authority
         if not self.success:
-            await session.session.send(Lang.authority.low_authority())
+            await session.send(Lang.authority.low_authority())
             return STOP
 
     async def after(self):
