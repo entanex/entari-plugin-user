@@ -27,6 +27,7 @@ async def user_(session: UserSession):
             platform=session.platform,
             platform_id=session.platform_id,
             user_name=session.user_name,
+            authority=session.user.authority,
             created_at=session.created_at.astimezone(),
         )
     )

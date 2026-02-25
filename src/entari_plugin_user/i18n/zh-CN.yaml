@@ -30,6 +30,7 @@ user:
     平台名：{platform}
     平台ID：{platform_id}
     用户名：{user_name}
+    权限等级：{authority}
     创建日期：{created_at}
 
   rename:
