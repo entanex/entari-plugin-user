@@ -3,6 +3,9 @@ from arclet.entari import metadata
 from .config import Config
 from .annotated import User as User
 from .annotated import UserSession as UserSession
+from .filters import Auth as Auth
+from .filters import only_superuser as only_superuser
+from .filters import Authorization as Authorization
 from .utils import get_user as get_user
 from .utils import get_user_by_id as get_user_by_id
 
@@ -20,6 +23,9 @@ __all__ = [
     "get_user_by_id",
     "User",
     "UserSession",
+    "Auth",
+    "Authorization",
+    "only_superuser",
 ]
 
 from . import matchers as matchers
