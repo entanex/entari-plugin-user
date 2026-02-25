@@ -5,7 +5,9 @@
       "scope": "authority",
       "types": [
         "success",
-        "low_authority"
+        "low_authority",
+        "superuser_authed",
+        "superuser_guide"
       ]
     },
     {

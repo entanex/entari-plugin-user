@@ -9,8 +9,8 @@ from ..utils import get_user
 from ..models import Bind
 
 
-def generate_token() -> str:
-    return f"{config.user_token_prefix}{random.randint(100000, 999999)}"
+def generate_token(prefix: str = config.user_token_prefix) -> str:
+    return f"{prefix}{random.randint(100000, 999999)}"
 
 
 async def get_bind_list(platform: str, platform_id: str) -> Sequence[Bind]:

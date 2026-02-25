@@ -7,6 +7,8 @@ from tarina.lang.model import LangItem, LangModel
 class Authority:
     success: LangItem = LangItem("authority", "success")
     low_authority: LangItem = LangItem("authority", "low_authority")
+    superuser_authed: LangItem = LangItem("authority", "superuser_authed")
+    superuser_guide: LangItem = LangItem("authority", "superuser_guide")
 
 
 class Bind:

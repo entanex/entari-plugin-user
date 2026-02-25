@@ -18,6 +18,16 @@
           "title": "low_authority",
           "description": "value of lang item type 'low_authority'",
           "type": "string"
+        },
+        "superuser_authed": {
+          "title": "superuser_authed",
+          "description": "value of lang item type 'superuser_authed'",
+          "type": "string"
+        },
+        "superuser_guide": {
+          "title": "superuser_guide",
+          "description": "value of lang item type 'superuser_guide'",
+          "type": "string"
         }
       }
     },

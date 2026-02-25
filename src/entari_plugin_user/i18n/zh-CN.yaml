@@ -3,6 +3,8 @@
 authority:
   success: 用户数据已修改
   low_authority: 权限不足
+  superuser_authed: SUPERUSER 授权成功！
+  superuser_guide: 请前往控制台获取授权码
 
 bind:
   generated_1: |-
