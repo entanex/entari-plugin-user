@@ -42,6 +42,11 @@ class UserSession:
         self.user = user
 
     @property
+    def internal(self) -> Session[MessageEvent]:
+        """内部会话"""
+        return self.session
+
+    @property
     def user_id(self) -> int:
         """用户 ID"""
         return self.user.id
