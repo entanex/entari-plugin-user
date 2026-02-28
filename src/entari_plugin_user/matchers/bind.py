@@ -56,7 +56,7 @@ async def _(token: command.Match[str], session: UserSession):
             await session.send(Lang.bind.same_account())
             return
 
-        user = await get_user(session.platform, session.platform_id)
+        user = await get_user(session.platform, session.session.user)
         await set_bind(session.platform, session.platform_id, user.id)
         await session.send(Lang.bind.success())
     else:
@@ -66,7 +66,7 @@ async def _(token: command.Match[str], session: UserSession):
 
 @bind_disp.assign("list")
 async def _(session: UserSession):
-    binds = await get_bind_list(session.platform, session.platform_id)
+    binds = await get_bind_list(session.platform, session.session.user)
 
     if not binds:
         await session.send(Lang.bind.no_accounts())

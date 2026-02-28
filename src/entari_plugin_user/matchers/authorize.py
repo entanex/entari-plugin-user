@@ -35,7 +35,8 @@ async def authorize_(value: int | None, user: At, session: UserSession):
         return
 
     operator_user = session.user
-    target_user = await get_user(session.platform, user.id)
+    platform_user = await session.user_get(user.id)
+    target_user = await get_user(session.platform, platform_user)
 
     if target_user.authority >= operator_user.authority:
         await session.send(Lang.authority.low_authority())

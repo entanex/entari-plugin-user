@@ -14,7 +14,7 @@ async def get_user(session: Session[MessageEvent]) -> User:
         )
 
         if user is None:
-            user = await create_user(session.account.platform, session.user.id)
+            user = await create_user(session.account.platform, session.user)
             user = await db_session.merge(user)
 
         return user

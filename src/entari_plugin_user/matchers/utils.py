@@ -2,6 +2,7 @@ import random
 from collections.abc import Sequence
 
 from sqlalchemy import select
+from arclet.entari import User as UserModel
 from entari_plugin_database import get_session
 
 from ..config import config
@@ -13,9 +14,9 @@ def generate_token(prefix: str = config.user_token_prefix) -> str:
     return f"{prefix}{random.randint(100000, 999999)}"
 
 
-async def get_bind_list(platform: str, platform_id: str) -> Sequence[Bind]:
+async def get_bind_list(platform: str, platform_user: UserModel) -> Sequence[Bind]:
     async with get_session() as db_session:
-        user = await get_user(platform, platform_id)
+        user = await get_user(platform, platform_user)
 
         binds = (
             await db_session.scalars(select(Bind).where(Bind.bind_id == user.id))

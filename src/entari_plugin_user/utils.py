@@ -1,6 +1,7 @@
 import asyncio
 
 from sqlalchemy import exc, select
+from arclet.entari import User as UserModel
 from entari_plugin_database import AsyncSession, get_session
 
 from .models import User, Bind
@@ -31,17 +32,17 @@ async def _get_user(
     ).one_or_none()
 
 
-async def create_user(platform: str, platform_id: str) -> User:
+async def create_user(platform: str, platform_user: UserModel) -> User:
     async with _get_insert_mutex():
         try:
             async with get_session(expire_on_commit=False) as db_session:
-                user = User(name=f"{platform}-{platform_id}")
+                user = User(name=platform_user.name)
                 db_session.add(user)
                 await db_session.commit()
 
                 bind = Bind(
                     platform=platform,
-                    platform_id=platform_id,
+                    platform_id=platform_user.id,
                     bind_id=user.id,
                     original_id=user.id,
                 )
@@ -53,7 +54,7 @@ async def create_user(platform: str, platform_id: str) -> User:
                 user = await _get_user(
                     db_session,
                     platform,
-                    platform_id,
+                    platform_user.id,
                 )
 
                 if user is None:
@@ -62,18 +63,18 @@ async def create_user(platform: str, platform_id: str) -> User:
     return user
 
 
-async def get_user(platform: str, platform_id: str) -> User:
+async def get_user(platform: str, platform_user: UserModel) -> User:
     async with get_session() as db_session:
-        user = await _get_user(
+        _user = await _get_user(
             db_session,
             platform,
-            platform_id,
+            platform_user.id,
         )
 
-    if not user:
-        user = await create_user(platform, platform_id)
+    if not _user:
+        _user = await create_user(platform, platform_user)
 
-    return user
+    return _user
 
 
 async def get_user_by_id(user_id: int) -> User:
