@@ -47,16 +47,17 @@ async def _(token: command.Match[str], session: UserSession):
 
     platform, platform_id, user_id, channel_type = bind_info
 
-    if channel_type is not None and channel_type.value != 1:
+    if channel_type is not None and channel_type != ChannelType.DIRECT:
         token.result = generate_token()
         tokens[token.result] = (session.platform, session.platform_id, user_id, None)
         await session.send(Lang.bind.generated_2(token=token.result))
     elif channel_type is None:
-        if session.user_id != user_id:
+        if session.user_id != user_id:  # session.user_id=1 user_id=1
             await session.send(Lang.bind.same_account())
             return
 
-        user = await get_user(session.platform, session.session.user)
+        platform_user = await session.internal.user_get(platform_id)
+        user = await get_user(platform, platform_user)
         await set_bind(session.platform, session.platform_id, user.id)
         await session.send(Lang.bind.success())
     else:
