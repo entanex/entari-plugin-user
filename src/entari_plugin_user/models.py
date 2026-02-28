@@ -12,7 +12,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     """用户 ID"""
-    name: Mapped[str] = mapped_column(String(255), unique=True)
+    name: Mapped[str] = mapped_column(String(255))
     """用户昵称"""
     authority: Mapped[int] = mapped_column(Integer, default=1)
     """权限等级"""
