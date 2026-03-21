@@ -1,10 +1,14 @@
+from typing import Generic
+from typing_extensions import TypeVar
 from collections.abc import Iterable
 from datetime import datetime, timezone
 
 from sqlalchemy import func, String, Integer, DateTime
 
-from arclet.entari import Element, MessageObject, Session, MessageEvent, ChannelType
+from arclet.entari import Element, MessageObject, Session, BaseEvent, ChannelType
 from entari_plugin_database import Base, mapped_column, Mapped
+
+E = TypeVar("E", bound=BaseEvent, default=BaseEvent)
 
 
 class User(Base):
@@ -33,16 +37,16 @@ class Bind(Base):
     """初始时绑定的用户 ID"""
 
 
-class UserSession:
-    session: Session[MessageEvent]
+class UserSession(Generic[E]):
+    session: Session[E]
     user: User
 
-    def __init__(self, session: Session[MessageEvent], user: User) -> None:
+    def __init__(self, session: Session[E], user: User) -> None:
         self.session = session
         self.user = user
 
     @property
-    def internal(self) -> Session[MessageEvent]:
+    def internal(self) -> Session[E]:
         """内部会话"""
         return self.session
 
@@ -54,6 +58,8 @@ class UserSession:
     @property
     def platform_id(self) -> str:
         """用户平台账号"""
+        if self.session.event.user is None:
+            raise RuntimeError(f"Event {self.session.event.type!r} has no User")
         return self.session.event.user.id
 
     @property
