@@ -37,7 +37,8 @@ async def create_user(platform: str, platform_user: UserModel) -> User:
     async with _get_insert_mutex():
         try:
             async with get_session(expire_on_commit=False) as db_session:
-                user = User(name=platform_user.name)
+                name = platform_user.nick or platform_user.name or platform_user.id
+                user = User(name=name)
                 db_session.add(user)
                 await db_session.commit()
 
